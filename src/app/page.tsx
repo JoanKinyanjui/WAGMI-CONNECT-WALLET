@@ -20,10 +20,12 @@ export default function Home() {
     setBal(Number(balInEth))
   }
 
-  useEffect(()=>{
-getBalance();
-  },[])
-
+  useEffect(() => {
+    if (isConnected && address) {
+      getBalance();
+    }
+  }, [isConnected, address]);
+  
   return (
     <main className=" grid gap-5 py-5 w-11/12 md:w-[70%] mx-auto">
     <div className="w-full flex justify-end">
