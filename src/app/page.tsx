@@ -3,12 +3,17 @@ import { useWeb3ModalAccount, useWeb3ModalProvider } from "@web3modal/ethers/rea
 import { BrowserProvider, formatUnits } from "ethers";
 import { useEffect, useState } from "react";
 
-
+interface Transaction {
+  hash: string;
+  from: string;
+  to: string;
+  value: string; 
+}
 export default function Home() {
   const { address, chainId, isConnected } = useWeb3ModalAccount();
   const [bal,setBal] = useState<number>();
   const { walletProvider } = useWeb3ModalProvider();
-  const [transactionData,setTransactionData] = useState<Array>([])
+  const [transactionData,setTransactionData] = useState<Array<Transaction>>([])
 
   async function getBalance() {
     if (!isConnected) throw Error('User disconnected');
@@ -64,7 +69,7 @@ export default function Home() {
 
      <div>
      <h1 className="text-bold text-xl">Transaction History</h1>
-{transactionData && transactionData.map((tx,index)=>(
+{transactionData && transactionData.map((tx:any,index:any)=>(
   <div key={index} className="py-2 text-gray-600">
      <div className="flex gap-2">
     <p className="text-semibold">TxHash</p>: <p>{tx?.hash}</p>
